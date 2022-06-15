@@ -4,12 +4,13 @@ using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TheHotel.DataSet1TableAdapters;
 
 namespace TheHotel //ВСЕ--------------------------------------------------LE RICHMOND ОТПРАВКА КОДА ПОДТВЕРЖДЕНИЕ---------------------------------------------------------
 {
-    public partial class repass : Window
+    public partial class PassCode : Window
     {
         SqlConnection con = new SqlConnection();
         DataSet1 DataSet1; UserTableAdapter userTableAdapter;
@@ -17,7 +18,7 @@ namespace TheHotel //ВСЕ--------------------------------------------------LE 
         string randomcode;
         public static string to;
 
-        public repass()
+        public PassCode()
         {
             InitializeComponent();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["TheHotel.Properties.Settings.HotelConnectionString"].ConnectionString.ToString();
@@ -93,7 +94,7 @@ namespace TheHotel //ВСЕ--------------------------------------------------LE 
             if (randomcode == (textBox2.Text).ToString())
             {
                 to = textBox1.Text;
-                otch rp = new otch();
+                PassRecovery rp = new PassRecovery();
                 this.Hide();
                 rp.Show();
             }
@@ -104,6 +105,25 @@ namespace TheHotel //ВСЕ--------------------------------------------------LE 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.RightShift) гости.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.Enter) broni.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+        }
+
+        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void textBox2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
         }
     }
 }

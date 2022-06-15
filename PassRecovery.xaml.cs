@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace TheHotel //ПОЛЬЗОВАТЕЛИ---------------------------------------------LE RICHMOND ИЗМЕНЕНИЕ ПАРОЛЯ-------------------------------------------------------------
 {
-    public partial class otch : Window
+    public partial class PassRecovery : Window
     {
         SqlConnection con = new SqlConnection();
-        string username = repass.to;
+        string username = PassCode.to;
 
-        public otch()
+        public PassRecovery()
         {
             InitializeComponent();
 
@@ -42,7 +44,8 @@ namespace TheHotel //ПОЛЬЗОВАТЕЛИ-----------------------------------
         private void broni_Click(object sender, RoutedEventArgs e) //проверка кода
         {
             string password = textBox1.Text;
-            if (textBox1.Text == textBox2.Text)
+
+            if ( textBox1.Text == textBox2.Text && (textBox1.Text).Length >= 6 && (textBox2.Text).Length >= 6 )
             {
                 SqlConnection conn = new SqlConnection(@"Data Source=IAMROBERT\MSSQLSERVERR;Initial Catalog=Hotel;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
                 string q = "update [User] set [Password]='" + password + "' where Email='" + username + "'";
@@ -51,18 +54,49 @@ namespace TheHotel //ПОЛЬЗОВАТЕЛИ-----------------------------------
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
-                MessageBox.Show("✔ Пароль успешно изменен");
+                tb_error.Text = ""; tb_ok.Text = "✔ Пароль успешно изменен";
+                this.Close();
+
+                MainWindow R = new MainWindow();
+                R.Show();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("⚠ Пароли не совподают");
+                tb_ok.Text = ""; tb_error.Text = "⚠ Пароли не совподают или не соответствуют требованиям";
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.Enter) broni.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+
+        private void textBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void textBox2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void textBox1_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 @.-_".IndexOf(e.Text) < 0;
+        }
+
+        private void textBox2_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 @.-_".IndexOf(e.Text) < 0;
         }
     }
 

@@ -3,16 +3,17 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TheHotel.DataSet1TableAdapters;
 
 namespace TheHotel //АДМИНИСТРАТОР--------------------------------------------------LE RICHMOND ОТЧЕТ---------------------------------------------------------
 {
-    public partial class pechat : Window
+    public partial class AdminPrint : Window
     {
         SqlConnection con = new SqlConnection();
         DataSet1 DataSet1;
         UserTableAdapter userTableAdapter;
-        public pechat()
+        public AdminPrint()
         {
             InitializeComponent(); RefreshData();
 
@@ -48,7 +49,7 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            A A = new A();
+            Administrator A = new Administrator();
             A.Show();
             this.Close();
         }
@@ -89,6 +90,12 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
                 zan.Text = (myReader["Count"].ToString());
             }
             con.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btxit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.P) ppp.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
     }
 }

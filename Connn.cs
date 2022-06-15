@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TheHotel
 {
-    internal class function
+    internal class Connn
     {
        
         protected SqlConnection  getConnection()

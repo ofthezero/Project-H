@@ -2,18 +2,19 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TheHotel.DataSet1TableAdapters;
 
 namespace TheHotel //РЕСЕПШИОНИСТ------------------------------------------------LE RICHMOND ГЛАВНОЕ ОКНО------------------------------------------------------------
 {
-    public partial class R : Window
+    public partial class Receptionist : Window
     {
         SqlConnection con = new SqlConnection();
         DataSet1 DataSet1;
         UserTableAdapter userTableAdapter;
 
-        public R()
+        public Receptionist()
         {
             InitializeComponent();
 
@@ -58,6 +59,12 @@ namespace TheHotel //РЕСЕПШИОНИСТ-----------------------------------
             bron.Show();
             this.Close();
         }
-
+          private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.Q) гости.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.W) broni.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
     }
 }

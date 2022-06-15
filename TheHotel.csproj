@@ -134,30 +134,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Bron.xaml.cs">
-      <DependentUpon>Bron.xaml</DependentUpon>
+    <Compile Include="AdminAdress.xaml.cs">
+      <DependentUpon>AdminAdress.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Bronirovanie.xaml.cs">
-      <DependentUpon>Bronirovanie.xaml</DependentUpon>
+    <Compile Include="AdminBook.xaml.cs">
+      <DependentUpon>AdminBook.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminRoomsType.xaml.cs">
+      <DependentUpon>AdminRoomsType.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataSet1.cs">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="function.cs" />
-    <Compile Include="Gosti.xaml.cs">
-      <DependentUpon>Gosti.xaml</DependentUpon>
+    <Compile Include="Connn.cs" />
+    <Compile Include="AdminGuests.xaml.cs">
+      <DependentUpon>AdminGuests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Komnati.xaml.cs">
-      <DependentUpon>Komnati.xaml</DependentUpon>
+    <Compile Include="AdminRooms.xaml.cs">
+      <DependentUpon>AdminRooms.xaml</DependentUpon>
     </Compile>
-    <Compile Include="otch.xaml.cs">
-      <DependentUpon>otch.xaml</DependentUpon>
+    <Compile Include="PassRecovery.xaml.cs">
+      <DependentUpon>PassRecovery.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pechat.xaml.cs">
-      <DependentUpon>pechat.xaml</DependentUpon>
+    <Compile Include="AdminPrint.xaml.cs">
+      <DependentUpon>AdminPrint.xaml</DependentUpon>
     </Compile>
-    <Compile Include="R.xaml.cs">
-      <DependentUpon>R.xaml</DependentUpon>
+    <Compile Include="Receptionist.xaml.cs">
+      <DependentUpon>Receptionist.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecepBook.xaml.cs">
       <DependentUpon>RecepBook.xaml</DependentUpon>
@@ -165,29 +168,33 @@
     <Compile Include="RecepGuests.xaml.cs">
       <DependentUpon>RecepGuests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="repass.xaml.cs">
-      <DependentUpon>repass.xaml</DependentUpon>
+    <Compile Include="PassCode.xaml.cs">
+      <DependentUpon>PassCode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sotrudniki.xaml.cs">
-      <DependentUpon>Sotrudniki.xaml</DependentUpon>
+    <Compile Include="AdminEmployee.xaml.cs">
+      <DependentUpon>AdminEmployee.xaml</DependentUpon>
     </Compile>
-    <Page Include="A.xaml">
+    <Page Include="AdminAdress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Bron.xaml">
+    <Page Include="Administrator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Bronirovanie.xaml">
+    <Page Include="AdminBook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Gosti.xaml">
+    <Page Include="AdminGuests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Komnati.xaml">
+    <Page Include="AdminRooms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminRoomsType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,8 +202,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="A.xaml.cs">
-      <DependentUpon>A.xaml</DependentUpon>
+    <Compile Include="Administrator.xaml.cs">
+      <DependentUpon>Administrator.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -211,15 +218,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="otch.xaml">
+    <Page Include="PassRecovery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pechat.xaml">
+    <Page Include="AdminPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="R.xaml">
+    <Page Include="Receptionist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,11 +238,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="repass.xaml">
+    <Page Include="PassCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sotrudniki.xaml">
+    <Page Include="AdminEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,39 +286,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\8712599_favorite_star_star_color_star_iso_color_star.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712525_color_iso_computer_color_computer_computer_computer_monitor_screen_pc.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712504_color_calender_iso_color_calender_calender_schedule_calender_dates.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712526_trick_wand_magic hat_trick_magic_magic_trick_magic_color_magic_trick_iso_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712509_iso_report_diagram_graph_chart_chart_chart_color_chart_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712556_device_phone_mobile_mobile_color_mobile_color_mobile_iso.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712544_reading_learning_color_notebook_iso_color_notebook_notebook_notebook_book.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\8712496_bulb_idea_lightbulb_color_iso_bulb_bulb_bulb_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\richemond-footer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\richemonlkd-footer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\imagfes.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Снимок экрана 2022-04-05 000348.png" />
   </ItemGroup>
   <ItemGroup>
@@ -319,9 +293,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Печать.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Печать1.png" />

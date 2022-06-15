@@ -2,18 +2,19 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TheHotel.DataSet1TableAdapters;
 
 namespace TheHotel //-----------------------------------------------------LE RICHMOND АДМИНИСТРАТОР--------------------------------------------------------
 {
-    public partial class A : Window
+    public partial class Administrator : Window
     {
         SqlConnection con = new SqlConnection();
         DataSet1 DataSet1;
         UserTableAdapter userTableAdapter;
 
-        public A()
+        public Administrator()
         {
             InitializeComponent();
 
@@ -38,36 +39,63 @@ namespace TheHotel //-----------------------------------------------------LE RIC
 
         private void guest_Click(object sender, RoutedEventArgs e) //переход в окно - гости
         {
-            Gosti gosti = new Gosti();
+            AdminGuests gosti = new AdminGuests();
             gosti.Show();
             this.Close();
         }
 
         private void komnati_Click(object sender, RoutedEventArgs e) //переход в окно - комнаты
         {
-            Komnati komnati = new Komnati();
+            AdminRooms komnati = new AdminRooms();
             komnati.Show();
             this.Close();
         }
 
         private void broni_Click(object sender, RoutedEventArgs e) //переход в окно - бронирование
         {
-            Bron bron = new Bron();
+            AdminBook bron = new AdminBook();
             bron.Show();
             this.Close();
         }
 
         private void otch_Click(object sender, RoutedEventArgs e) //переход в окно - отчет 
         {
-            pechat pechat = new pechat();
+            AdminPrint pechat = new AdminPrint();
             pechat.Show();
             this.Close();
         }
 
         private void pol_Click(object sender, RoutedEventArgs e) //переход в окно - пользователи
         {
-            Sotrudniki sotrudniki = new Sotrudniki();
+            AdminEmployee sotrudniki = new AdminEmployee();
             sotrudniki.Show();
+            this.Close();
+        }
+
+        private void otch_Clickk(object sender, RoutedEventArgs e) //переход в окно - тип комнат
+        {
+            AdminRoomsType sotrudniki = new AdminRoomsType();
+            sotrudniki.Show();
+            this.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.Q) гости.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.W) komnati.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.E) otc.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.R) broni.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.T) pol.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.P) otch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+        }
+
+        private void adr_Click(object sender, RoutedEventArgs e)
+        {
+            AdminAdress adress = new AdminAdress();
+            adress.Show();
             this.Close();
         }
     }

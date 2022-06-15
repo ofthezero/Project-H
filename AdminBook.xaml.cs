@@ -9,13 +9,13 @@ using System.Data;
 
 namespace TheHotel  //Администратор----------------------------------------------LE RICHMOND БРОНИРОВАНИЕ---------------------------------------------------------
 {
-    public partial class Bron : Window
+    public partial class AdminBook : Window
     {
         DataSet1 DataSet1;
         UserTableAdapter userTableAdapter;
         SqlConnection con = new SqlConnection();
 
-        public Bron()
+        public AdminBook()
         {
             InitializeComponent(); RefreshData();
 
@@ -29,21 +29,21 @@ namespace TheHotel  //Администратор--------------------------------
             room_categoriesTableAdapter adapter1 = new room_categoriesTableAdapter(); //вывод данных - тип комнаты
             DataSet1.room_categoriesDataTable table1 = new DataSet1.room_categoriesDataTable();
             adapter1.Fill(table1); tb3.ItemsSource = table1;           
-            tb3.DisplayMemberPath = "label"; 
-            tb3.SelectedValuePath = "category_id";
-      
-            roomsTableAdapter adapter13 = new roomsTableAdapter(); //вывод данных - номер комнаты
-            DataSet1.roomsDataTable table13 = new DataSet1.roomsDataTable();
-            adapter13.Fill(table13); tb4.ItemsSource = table13;
-            tb4.DisplayMemberPath = "[Номер комнаты]";
-            tb4.SelectedValuePath = "[Номер комнаты]";
+            tb3.DisplayMemberPath = "Наименование"; 
+            tb3.SelectedValuePath = "Код типа";
 
             clientsTableAdapter adapter133 = new clientsTableAdapter(); //вывод данных - инициалы гостя
             DataSet1.clientsDataTable table133 = new DataSet1.clientsDataTable();
             adapter133.Fill(table133); tb2.ItemsSource = table133;
             tb2.DisplayMemberPath = "Инициалы";
             tb2.SelectedValuePath = "Код гостя";
-           
+
+            AdressHotelTableAdapter adapter134 = new AdressHotelTableAdapter(); //вывод данных - адрес отеля
+            DataSet1.AdressHotelDataTable table134 = new DataSet1.AdressHotelDataTable();
+            adapter134.Fill(table134); tb7.ItemsSource = table134;
+            tb7.DisplayMemberPath = "ulica";
+            tb7.SelectedValuePath = "id_adress";
+
             reservationTableAdapter adapter = new reservationTableAdapter(); DataSet1.reservationDataTable table = new DataSet1.reservationDataTable(); adapter.Fill(table);
             dg.ItemsSource = table;
         }
@@ -67,10 +67,10 @@ namespace TheHotel  //Администратор--------------------------------
             if (dg.SelectedItem != null)
             {
                 if (dg.SelectedItem != null) tb2.SelectedValue = (dg.SelectedItem as DataRowView).Row.ItemArray[1].ToString(); 
-                if (dg.SelectedItem != null) tb3.SelectedValue = (dg.SelectedItem as DataRowView).Row.ItemArray[2].ToString(); 
                 if (dg.SelectedItem != null) tb4.SelectedValue = (dg.SelectedItem as DataRowView).Row.ItemArray[2].ToString(); 
                 if (dg.SelectedItem != null) tb5.Text = (dg.SelectedItem as DataRowView).Row.ItemArray[3].ToString();
                 if (dg.SelectedItem != null) tb6.Text = (dg.SelectedItem as DataRowView).Row.ItemArray[4].ToString();
+                if (dg.SelectedItem != null) tb7.SelectedValue = (dg.SelectedItem as DataRowView).Row.ItemArray[5].ToString();
 
                 else { } 
             }
@@ -84,13 +84,14 @@ namespace TheHotel  //Администратор--------------------------------
             tb2.SelectedValue = -1;
             tb3.SelectedValue = -1;
             tb4.SelectedValue = -1;
+            tb7.SelectedValue = -1;
             tb5.Text = Convert.ToString(DateTime.Now);
             tb6.Text = Convert.ToString(DateTime.Now);
         }
 
         private void BLA_Click(object sender, RoutedEventArgs e) //назад - переход в главное окно администратора
         {
-            A s = new A();
+            Administrator s = new Administrator();
             s.Show();
             this.Close();
         }
@@ -114,7 +115,7 @@ namespace TheHotel  //Администратор--------------------------------
                 else if (tb2.SelectedIndex > -1 && tb4.SelectedIndex > -1)
                 {
                     //добавление данных в таблицу reservation
-                    new reservationTableAdapter().InsertQuery((int)tb2.SelectedValue, (int)tb4.SelectedValue, Convert.ToDateTime(tb5.Text), Convert.ToDateTime(tb6.Text));
+                    new reservationTableAdapter().InsertQuery((int)tb2.SelectedValue, (int)tb4.SelectedValue, Convert.ToString(tb5.Text), Convert.ToString(tb6.Text), (int)tb7.SelectedValue);
                     tb_error.Text = "";
                     tb_ok.Text = "✔ Данные успешно добавлены";
 
@@ -148,9 +149,9 @@ namespace TheHotel  //Администратор--------------------------------
             }
         }
 
-        public bool editReserv(int reserId, string client_id, string roomNo, DateTime date_in, DateTime date_out)
+        public bool editReserv(int reserId, string client_id, string roomNo, DateTime date_in, DateTime date_out, int id_adress)
         {
-            string insertQuerry = "UPDATE reservation SET client_id=@cld,room_no=@Rno,date_in=@Din,date_out=@Dout WHERE reserv_id=@rid";
+            string insertQuerry = "UPDATE reservation SET client_id=@cld,room_no=@Rno,date_in=@Din,date_out=@Dout, id_adress = @Adr WHERE reserv_id=@rid";
             
             SqlCommand command = new SqlCommand(insertQuerry, con);
            
@@ -159,6 +160,7 @@ namespace TheHotel  //Администратор--------------------------------
             command.Parameters.Add("@Rno", SqlDbType.VarChar).Value = roomNo;
             command.Parameters.Add("@Din", SqlDbType.Date).Value = date_in;
             command.Parameters.Add("@Dout", SqlDbType.Date).Value = date_out;
+            command.Parameters.Add("@Adr", SqlDbType.Int).Value = id_adress;
 
             con.Open();
             if (command.ExecuteNonQuery() == 1)
@@ -205,9 +207,10 @@ namespace TheHotel  //Администратор--------------------------------
                 string roomNo = tb4.SelectedValue.ToString(); //код комнаты 
                 DateTime dIn = Convert.ToDateTime(tb5.Text); //дата пребывния
                 DateTime dOut = Convert.ToDateTime(tb6.Text); //дата чек-аута
-               
-               
-                if (editReserv(reservId, client_id, roomNo, dIn, dOut) && setReservRoom(roomNo, "Занято") && setReservRoom(rno, "Свободно"))
+                int id_adress = Convert.ToInt32((dg.SelectedItems[0] as DataRowView).Row.ItemArray[5]); //код бронирования
+
+
+                if (editReserv(reservId, client_id, roomNo, dIn, dOut, id_adress) && setReservRoom(roomNo, "Занято") && setReservRoom(rno, "Свободно"))
                 {
                     tb_error.Text = "";
                     tb_ok.Text = "✔ Данные успешно изменены";               
@@ -237,6 +240,8 @@ namespace TheHotel  //Администратор--------------------------------
                 con.Close();
                 return false;
             }
+
+
         }
 
         private void udal_Click(object sender, RoutedEventArgs e) //удаление данных из таблицы reservation а также измениние статуса комнаты в таблице rooms       
@@ -251,6 +256,12 @@ namespace TheHotel  //Администратор--------------------------------
                     tb_error.Text = "";
                     tb_ok.Text = "✔ Данные успешно удалены";
                     RefreshData();
+                    tb2.SelectedValue = -1;
+                    tb3.SelectedValue = -1;
+                    tb4.SelectedValue = -1;
+                    tb7.SelectedValue = -1;
+                    tb5.Text = Convert.ToString(DateTime.Now);
+                    tb6.Text = Convert.ToString(DateTime.Now);
                 }
             }
             catch
@@ -269,16 +280,42 @@ namespace TheHotel  //Администратор--------------------------------
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) 
         {
-            string curr = tb3.SelectedIndex.ToString();
+            string curr = tb7.SelectedIndex.ToString();
             int currentValue = (Convert.ToInt16(curr));
-            int currentValue2 = currentValue + 1;       
+            int currentValue2 = currentValue + 1;
+
+            string curr1 = tb3.SelectedIndex.ToString();
+            int currentValue1 = (Convert.ToInt16(curr1));
+            int currentValue21 = currentValue1 + 1;
 
             roomsTableAdapter adapter13 = new roomsTableAdapter();
             DataSet1.roomsDataTable table13 = new DataSet1.roomsDataTable();
-            adapter13.Fill(table13); table13.DefaultView.RowFilter = "[Тип комнаты] =  '" + currentValue2 + "' and [Статус] = 'Свободно' ";
-            tb4.ItemsSource = table13;    
+            adapter13.Fill(table13); table13.DefaultView.RowFilter = "[№ Отеля] =  '" + currentValue2 +"' and [Тип комнаты] =  '" + currentValue21 + "' and [Статус] = 'Свободно' ";
+            tb4.ItemsSource = table13;
             tb4.DisplayMemberPath = "[Номер комнаты]";
-            tb4.SelectedValuePath = "[Номер комнаты]";    
+            tb4.SelectedValuePath = "[Номер комнаты]";
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+
+      
+
+        private void ComboBox_SelectionChanged7(object sender, SelectionChangedEventArgs e)
+        {
+            string curr = tb7.SelectedIndex.ToString();
+            int currentValue = (Convert.ToInt16(curr));
+            int currentValue2 = currentValue + 1;
+
+            roomsTableAdapter adapter13 = new roomsTableAdapter();
+            DataSet1.roomsDataTable table13 = new DataSet1.roomsDataTable();
+            adapter13.Fill(table13); table13.DefaultView.RowFilter = "[№ Отеля] =  '" + currentValue2 + "' and [Статус] = 'Свободно' ";
+            tb4.ItemsSource = table13;
+            tb4.DisplayMemberPath = "[Номер комнаты]";
+            tb4.SelectedValuePath = "[Номер комнаты]";
         }
     }
 }

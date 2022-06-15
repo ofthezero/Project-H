@@ -7,8 +7,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TheHotel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
-    <Grid MouseDown="Border_MouseDown">
+        Title="MainWindow" KeyDown="OnKeyDownHandler" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Grid MouseDown="Border_MouseDown" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="313*"/>
             <ColumnDefinition Width="487*"/>
@@ -44,7 +44,10 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10" Width="288">
                         <materialDesign:PackIcon Kind="Lock" Width="25" Height="25" Foreground="BLACK"/>
-                        <PasswordBox x:Name="Password" Margin="10 0" materialDesign:HintAssist.Hint="●●●●●●●●●●" Foreground="BLACK" Width="250" BorderBrush="BLACK" CaretBrush="#B38B59" SelectionBrush="#B38B59" Cursor="IBeam" />
+                        <PasswordBox x:Name="Password" PasswordChar="●" Margin="10 0" materialDesign:HintAssist.Hint="●●●●●●●●●●" Foreground="BLACK" Width="250" BorderBrush="BLACK" CaretBrush="#B38B59" SelectionBrush="#B38B59" Cursor="IBeam" Visibility="Visible" />
+
+                        <TextBox x:Name="Pro" Margin="10 0" Visibility="Collapsed"  materialDesign:HintAssist.Hint="Введите пароль" Foreground="BLACK" Width="250" BorderBrush="BLACK" CaretBrush="#B38B59" SelectionBrush="#B38B59" Cursor="Arrow" />
+
                     </StackPanel>
                     <StackPanel Margin="10" HorizontalAlignment="Center"/>
                 </StackPanel>
@@ -57,7 +60,10 @@
         <StackPanel  Margin="0,244,55,126" HorizontalAlignment="Right" Width="205" Grid.Column="1" />
         <Button Content="Войти" Width="278" Height="40" HorizontalAlignment="Left" Margin="268,264,0,146" Style="{StaticResource MaterialDesignRaisedButton}" 
                          materialDesign:ButtonAssist.CornerRadius="10" BorderThickness="2" BorderBrush="#B38B59"
-                         Background="#B38B59" Foreground="#2F2F2F"  x:Name="btnLogin" Click="btnLogin_Click" Cursor="Hand" Grid.ColumnSpan="2"  />
+                         Background="#B38B59" Foreground="#2F2F2F"  x:Name="btnLogin2" Click="btnLogin_Click2" Cursor="Hand" Grid.ColumnSpan="2" Visibility="Collapsed"  />
+        <Button Content="Войти" Width="278" Height="40" HorizontalAlignment="Left" Margin="268,264,0,146" Style="{StaticResource MaterialDesignRaisedButton}" 
+                         materialDesign:ButtonAssist.CornerRadius="10" BorderThickness="2" BorderBrush="#B38B59"
+                         Background="#B38B59" Foreground="#2F2F2F"  x:Name="btnLogin" Click="btnLogin_Click" Cursor="Hand" Grid.ColumnSpan="2" Visibility="Visible"  />
         <Button Content="Восстановить пароль" Width="278" Height="40" HorizontalAlignment="Left" Margin="268,309,0,101" Style="{StaticResource MaterialDesignRaisedButton}" 
                     materialDesign:ButtonAssist.CornerRadius="99" BorderThickness="2" BorderBrush="{x:Null}" 
                      Background="{x:Null}" Foreground="#2F2F2F" x:Name="PEREHOD" Click="PEREHOD_Click" Grid.ColumnSpan="2" />
@@ -65,14 +71,14 @@
         <TextBlock x:Name="tb_error" Text="" Margin="254,236,254,166" Foreground="#FFB38B59" TextAlignment="Center" FontSize="11" FontFamily="Cascadia Code ExtraLight" Grid.ColumnSpan="2"/>
         <TextBlock Text="★★★★★" Foreground="BLACK" TextAlignment="Center" FontSize="18" FontFamily="Great Vibes" Margin="268,71,264,332" Grid.ColumnSpan="2"/>
         <materialDesign:PackIcon Kind="Close" Foreground="BLACK" Width="24" Height="25" Grid.Column="1" Margin="425,39,0,0" />
-        <!--<materialDesign:PackIcon x:Name="eye" Kind="eye" Foreground="BLACK" Width="24" Height="25" Grid.Column="1" Margin="209,200,0,0" />-->
+        <materialDesign:PackIcon x:Name="eye" Kind="eye" Foreground="BLACK" Width="24" Height="25" Grid.Column="1" Margin="203,200,0,0" Visibility="Visible" />
 
-        <!--<Button Margin="203,193,248,225" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="20"  Background="{x:Null}"
-              BorderBrush="{x:Null}"   ToolTip="Выйти из приложения" x:Name="btnxit" Click="eye_Click" Grid.Column="1" Width="35" Cursor="Hand"/>
+        <Button Margin="197,193,254,225" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="20"  Background="{x:Null}"
+              BorderBrush="{x:Null}" x:Name="btnxit" Click="eye_Click" Grid.Column="1" Width="35" Cursor="Hand" Visibility="Visible"/>
 
-        <materialDesign:PackIcon x:Name="ee" Kind="EyeOff" Foreground="BLACK" Width="24" Height="25" Grid.Column="1" Margin="238,200,0,0" />
+        <materialDesign:PackIcon x:Name="ee" Kind="EyeOff" Foreground="BLACK" Width="24" Height="25" Grid.Column="1" Margin="203,200,0,0" Visibility="Collapsed" />
 
-        <Button Margin="239,193,214,225" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="20"  Background="{x:Null}"
-              BorderBrush="{x:Null}"   ToolTip="Выйти из приложения" x:Name="tnxit" Click="ey_Click" Grid.Column="1" Width="35" Cursor="Hand"/>-->
+        <Button Margin="197,193,254,225" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="20"  Background="{x:Null}"
+              BorderBrush="{x:Null}"   x:Name="tnxit" Grid.Column="1" Width="35" Cursor="Hand" Click="tnxit_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>

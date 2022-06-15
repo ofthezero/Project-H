@@ -9,13 +9,13 @@ using TheHotel.DataSet1TableAdapters;
 
 namespace TheHotel //АДМИНИСТРАТОР--------------------------------------------------LE RICHMOND ПОЛЬЗОВАТЕЛИ---------------------------------------------------------
 {
-    public partial class Sotrudniki : Window
+    public partial class AdminEmployee : Window
     {
         SqlConnection con = new SqlConnection();
         DataSet1 DataSet1;
         UserTableAdapter userTableAdapter;
 
-        public Sotrudniki()
+        public AdminEmployee()
         {
             InitializeComponent(); RefreshData();
 
@@ -81,7 +81,7 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
 
         private void BLA_Click(object sender, RoutedEventArgs e)
         {
-            A s = new A();
+            Administrator s = new Administrator();
             s.Show();
             this.Close();
         }
@@ -90,7 +90,7 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
         {
             try
             {
-                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && !String.IsNullOrWhiteSpace(tb7.Text))
+                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && !String.IsNullOrWhiteSpace(tb7.Text) && tb4.Text == "Ресепшионист" | tb4.Text == "Администратор" && (tb2.Text).Length >= 6 && (tb3.Text).Length >= 6 && (tb7.Text).Length >= 5 && (tb5.Text).Length >= 7)
                 {
                     new UserTableAdapter().InsertQuery1(Convert.ToString(tb7.Text), Convert.ToString(tb2.Text), Convert.ToString(tb3.Text), Convert.ToString(tb4.Text), Convert.ToString(tb5.Text));
                     tb_error.Text = "";
@@ -114,7 +114,7 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
         {
             try
             {
-                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && !String.IsNullOrWhiteSpace(tb7.Text))
+                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && !String.IsNullOrWhiteSpace(tb7.Text) && tb4.Text == "Ресепшионист" | tb4.Text == "Администратор"  && (tb2.Text).Length >= 6 && (tb3.Text).Length >= 6 && (tb7.Text).Length >= 5 && (tb5.Text).Length >= 7)
                 {
                     new UserTableAdapter().UpdateQuery(Convert.ToString(tb2.Text), Convert.ToString(tb3.Text), Convert.ToString(tb5.Text), Convert.ToString(tb7.Text), Convert.ToString(tb4.Text), Convert.ToInt32((dg.SelectedItems[0] as DataRowView).Row.ItemArray[0]));
                     tb_error.Text = "";
@@ -142,6 +142,11 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
                 tb_error.Text = "";
                 tb_ok.Text = "✔ Данные успешно удалены";
                 RefreshData();
+                tb2.Clear();
+                tb3.Clear();
+                tb4.Clear();
+                tb5.Clear();
+                tb7.Clear();
             }
             catch
             {
@@ -155,6 +160,57 @@ namespace TheHotel //АДМИНИСТРАТОР---------------------------------
             MainWindow Ma = new MainWindow();
             Ma.Show();
             this.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+
+        private void tb7_PreviewTextInput(object sender, TextCompositionEventArgs e) //инициалы только буквы и точка 
+        {
+            e.Handled = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ .-".IndexOf(e.Text) < 0; //русские буквы и пробел
+        }
+
+        private void tb2_PreviewTextInput(object sender, TextCompositionEventArgs e) //только английские буквы, цыфры точка,@#!%
+        {
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ._".IndexOf(e.Text) < 0;
+        }
+
+        private void tb4_PreviewTextInput(object sender, TextCompositionEventArgs e) //только рус буквы
+        {
+            e.Handled = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ".IndexOf(e.Text) < 0; 
+        }
+
+        private void tb5_PreviewTextInput(object sender, TextCompositionEventArgs e) //англ букы цыфры .,@_-
+        {
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 @.-_".IndexOf(e.Text) < 0;
+        }
+
+        private void tb3_PreviewTextInput(object sender, TextCompositionEventArgs e) //пароль
+        {
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 @.-_".IndexOf(e.Text) < 0;
+        }
+
+        private void tb2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void tb3_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void tb4_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void tb5_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
         }
     }
 }

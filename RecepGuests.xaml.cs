@@ -78,7 +78,7 @@ namespace TheHotel //РЕСЕПШИОНИСТ-----------------------------------
 
         private void BLA_Click(object sender, RoutedEventArgs e)
         {
-            R s = new R();
+            Receptionist s = new Receptionist();
             s.Show();
             this.Close();
         }
@@ -87,12 +87,16 @@ namespace TheHotel //РЕСЕПШИОНИСТ-----------------------------------
         {
             try
             {
-                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text))
+                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && (tb3.Text).Length > 5 && (tb4.Text).Length >= 4 && (tb5.Text).Length >= 6 && (tb2.Text).Length > 4)
                 {
                     new clientsTableAdapter().InsertQuery(Convert.ToString(tb2.Text), Convert.ToDecimal(tb3.Text), Convert.ToString(tb4.Text), Convert.ToString(tb5.Text));
                     tb_error.Text = "";
                     tb_ok.Text = "✔ Данные успешно добавлены";
                     RefreshData();
+                    tb2.Clear();
+                    tb3.Clear();
+                    tb4.Clear();
+                    tb5.Clear();
                 }
                 else
                 {
@@ -111,7 +115,7 @@ namespace TheHotel //РЕСЕПШИОНИСТ-----------------------------------
         {
             try
             {
-                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text))
+                if (!String.IsNullOrWhiteSpace(tb2.Text) && !String.IsNullOrWhiteSpace(tb3.Text) && !String.IsNullOrWhiteSpace(tb4.Text) && !String.IsNullOrWhiteSpace(tb5.Text) && (tb3.Text).Length > 5 && (tb4.Text).Length >= 4 && (tb5.Text).Length >= 6 && (tb2.Text).Length > 4)
                 {
                     new clientsTableAdapter().UpdateQuery(Convert.ToString(tb2.Text), Convert.ToDecimal(tb3.Text), Convert.ToString(tb4.Text), Convert.ToString(tb5.Text), Convert.ToInt32((dg.SelectedItems[0] as DataRowView).Row.ItemArray[0]));
                     tb_error.Text = "";
@@ -152,6 +156,55 @@ namespace TheHotel //РЕСЕПШИОНИСТ-----------------------------------
             MainWindow Ma = new MainWindow();
             Ma.Show();
             this.Close();
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) btExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            if (e.Key == Key.X) btnExit.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+
+        private void tb2_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
+        {
+                    }
+
+        private void tb2_PreviewTextInput(object sender, TextCompositionEventArgs e) //анг и русский алфафвит пробел точка 
+        {
+
+            e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZабвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ .".IndexOf(e.Text) < 0;
+        }
+
+        private void tb3_PreviewTextInput(object sender, TextCompositionEventArgs e) //только цыфры
+        {
+          e.Handled = "0123456789".IndexOf(e.Text) < 0;
+           
+        }
+
+        private void tb4_PreviewTextInput(object sender, TextCompositionEventArgs e) //только цыфры + буквы англ знаки пробел
+        {
+            e.Handled = "0123456789".IndexOf(e.Text) < 0;
+            // e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ._".IndexOf(e.Text) < 0;
+        }
+
+        private void tb5_PreviewTextInput(object sender, TextCompositionEventArgs e) //только цыфры + буквы англ знаки пробел
+        {
+            e.Handled = "0123456789".IndexOf(e.Text) < 0;
+            //  e.Handled = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ._".IndexOf(e.Text) < 0;
+        }
+
+        private void tb3_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void tb4_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
+        }
+
+        private void tb5_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space) e.Handled = true;
         }
     }
 }

@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TheHotel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="White" >
+        Title="MainWindow" Height="450" KeyDown="OnKeyDownHandler" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Foreground="White" >
 
     <Grid MouseDown="Border_MouseDown">
         <Grid.Background>
@@ -21,10 +21,7 @@
         <StackPanel Margin="0,0,588,0" Orientation="Vertical" VerticalAlignment="Center">
 
         </StackPanel>
-        <Border Height="380" VerticalAlignment="Bottom" CornerRadius="0 0 60 60" Background="#B38B59" MouseDown="Border_MouseDown" Margin="0,0,0,70" Grid.ColumnSpan="2">
-
-
-        </Border>
+        <Border Height="387" VerticalAlignment="Top" CornerRadius="0 0 60 60" Background="#B38B59" MouseDown="Border_MouseDown" Margin="0,-7,0,0"/>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="800" />
         </StackPanel>
@@ -46,8 +43,10 @@
         <Button Margin="466,398,300,17" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10"  Background="{x:Null}"
               BorderBrush="#113E21"   ToolTip="Очистить" x:Name="och" Click="Clear_Click" Height="35" Cursor="Hand"/>
         <materialDesign:PackIcon Kind="Plus" Foreground="#B38B59" Width="24" Height="24" Margin="294,403,0,0" />
-        <TextBlock Text="Код гостя" Margin="22,118,0,309" Foreground="#FF4D3C26" TextAlignment="Center" FontSize="13" FontFamily="Arial Black" HorizontalAlignment="Left" FontWeight="Normal"/>
+        <TextBlock x:Name="test" Text="Код гостя" Margin="22,118,0,309" Foreground="#FF4D3C26" TextAlignment="Center" FontSize="13" FontFamily="Arial Black" HorizontalAlignment="Left" FontWeight="Normal"/>
         <TextBlock Text="Тип комнаты" Margin="22,160,0,267" Foreground="#FF4D3C26" TextAlignment="Center" FontSize="13" FontFamily="Arial Black" HorizontalAlignment="Left" FontWeight="Bold"/>
+        <TextBlock Text="Выбор отеля" Margin="22,82,0,345" Foreground="#FF4D3C26" TextAlignment="Center" FontSize="13" FontFamily="Arial Black" HorizontalAlignment="Left" FontWeight="Bold"/>
+
         <TextBlock Text="Номер комнаты" Foreground="#FF4D3C26" TextAlignment="Center" FontSize="13" FontFamily="Arial Black" Margin="22,205,0,222" HorizontalAlignment="Left" FontWeight="Normal"/>
         <TextBlock x:Name="tb_error" Text="" Margin="122,339,122,63" Foreground="#FFFFA9A9" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" FontFamily="Bodoni MT"/>
         <TextBlock x:Name="tb_ok" Text="" Margin="122,339,122,63" Foreground="#FF6EF961" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" FontFamily="Bodoni MT"/>
@@ -61,6 +60,7 @@
         <materialDesign:PackIcon Kind="LogoutVariant" Foreground="White" Width="24" Height="25" Margin="26,39,0,0" />
 
         <ComboBox x:Name="tb3" Margin="22,172,610,0" VerticalAlignment="Top" Foreground="Black" BorderBrush="White" SelectionChanged="ComboBox_SelectionChanged"  />
+        <ComboBox x:Name="tb7" Margin="22,93,610,0" VerticalAlignment="Top" Foreground="Black" BorderBrush="White" SelectionChanged="ComboBox_SelectionChanged7"  />
 
         <ComboBox x:Name="tb2" Margin="22,130,610,0" VerticalAlignment="Top" Foreground="Black" BorderBrush="White"  />
         <ComboBox x:Name="tb4" Margin="22,216,610,0" VerticalAlignment="Top" Foreground="Black" BorderBrush="White" />
